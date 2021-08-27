@@ -18,19 +18,19 @@ describe("Login Tests", () => {
         await closeBrowser(page);
     })
 
-    it("Login page is displayed", async () => {
+    test("Login page is displayed", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
     })
 
-    it("User can login successfully", async () => {
+    test("User can login successfully", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
         await loginPage.login("Admin", "admin123")
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
     })
 
-    it("Username cannot be empty", async () => {
+    test("Username cannot be empty", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
         await loginPage.clickLoginButton()
@@ -38,7 +38,7 @@ describe("Login Tests", () => {
         expect(await loginPage.getErrorMessage()).toBe("Username cannot be empty");
     })
 
-    it("Password cannot be empty", async () => {
+    test("Password cannot be empty", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
         await loginPage.typeUsername("Admin")
@@ -47,7 +47,7 @@ describe("Login Tests", () => {
         expect(await loginPage.getErrorMessage()).toBe("Password cannot be empty");
     })
 
-    it("Invalid credentials", async () => {
+    test("Invalid credentials", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
         await loginPage.login("Admin", "admin")
@@ -55,7 +55,7 @@ describe("Login Tests", () => {
         expect(await loginPage.getErrorMessage()).toBe("Invalid credentials");
     })
 
-    it("User can login after a failed attempt", async () => {
+    test("User can login after a failed attempt", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
         await loginPage.login("Admin", "admin")

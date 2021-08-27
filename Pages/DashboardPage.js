@@ -1,6 +1,6 @@
-import BasePage from "./BasePage";
+import HeaderSection from "./HeaderSection";
 
-export default class DashboardPage extends BasePage {
+export default class DashboardPage extends HeaderSection {
     $dashboardBox = '.box';
 
     async isDashboardPageDisplayed() {
