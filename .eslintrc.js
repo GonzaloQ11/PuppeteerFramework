@@ -4,6 +4,7 @@ module.exports = {
         "es2021": true,
         "jest": true,
         "node": true,
+        "jquery": true,
     },
     "extends": "eslint:recommended",
     "parser": "@babel/eslint-parser",

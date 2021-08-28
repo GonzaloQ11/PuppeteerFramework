@@ -14,7 +14,11 @@ export default class BasePage {
     }
 
     async getText(selector) {
-      return this.page.evaluate((element) => $(element)[0].outerText, selector);
+      return this.page.evaluate((element) => $(element)[0].textContent, selector);
+    }
+
+    async getValue(selector) {
+      return this.page.evaluate((element) => $(element)[0].value, selector);
     }
 
     async isDisplayed(selector) {
@@ -28,7 +32,7 @@ export default class BasePage {
     }
 
     async waitForPageLoaded() {
-      await this.page.waitForSelector("html.js-focus-visible", { hidden: true })
+      await this.page.waitForSelector("html[class='fontawesome-i2svg-active fontawesome-i2svg-complete']");
     }
 
     async clickByXpath(xpath) {
@@ -36,7 +40,7 @@ export default class BasePage {
     }
 
     async selectByOptionText(dropdownSelector, option) {
-      const optionTexts = await this.page.$$eval(`${dropdownSelector} option`, (options) => options.map((option) => option.outerText));
+      const optionTexts = await this.page.$$eval(`${dropdownSelector} option`, (options) => options.map((option) => option.textContent));
       const index = optionTexts.indexOf(option);
       const optionValues = await this.page.$$eval(`${dropdownSelector} option`, (options) => options.map((option) => option.value));
       await this.page.select(dropdownSelector, optionValues[index]);
