@@ -13,17 +13,21 @@ export default class BasePage {
       await this.page.goto(`${this.BASE_URL}${url}`);
     }
 
+    async getElementProperty(selector, property) {
+      return this.page.$eval(selector, (element, property) => element[property], property);
+    }
+
     async getText(selector) {
-      return this.page.evaluate((element) => $(element)[0].textContent, selector);
+      return this.getElementProperty(selector, "textContent");
     }
 
     async getValue(selector) {
-      return this.page.evaluate((element) => $(element)[0].value, selector);
+      return this.getElementProperty(selector, "value");
     }
 
-    async isDisplayed(selector) {
+    async isDisplayed(selector, { timeout = 5000 } = { }) {
       try {
-        await this.page.waitForSelector(selector, { timeout : 5000 });
+        await this.page.waitForSelector(selector, { timeout });
         return true;
       }
       catch (error) {
@@ -39,10 +43,14 @@ export default class BasePage {
       await (await this.page.$x(xpath))[0].click();
     }
 
+    async getElementsProperties(selector, property) {
+      return this.page.$$eval(selector, (elements, property) => elements.map((element) => element[property]), property);
+    }
+
     async selectByOptionText(dropdownSelector, option) {
-      const optionTexts = await this.page.$$eval(`${dropdownSelector} option`, (options) => options.map((option) => option.textContent));
+      const optionTexts = await this.getElementsProperties(`${dropdownSelector} option`, "textContent");
       const index = optionTexts.indexOf(option);
-      const optionValues = await this.page.$$eval(`${dropdownSelector} option`, (options) => options.map((option) => option.value));
+      const optionValues = await this.getElementsProperties(`${dropdownSelector} option`, "value");
       await this.page.select(dropdownSelector, optionValues[index]);
     }
   }

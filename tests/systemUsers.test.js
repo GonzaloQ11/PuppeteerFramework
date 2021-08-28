@@ -1,7 +1,8 @@
-import LoginPage from "../Pages/LoginPage"
-import DashboardPage from "../Pages/DashboardPage"
-import { launchBrowser, closeBrowser } from "../Utils/JestPuppeteerConfig"
-import AdminPage from "../Pages/AdminPage";
+import LoginPage from "../pages/LoginPage"
+import DashboardPage from "../pages/DashboardPage"
+import { launchBrowser, closeBrowser } from "../utils/JestPuppeteerConfig"
+import AdminPage from "../pages/AdminPage";
+import { testdata } from "../utils/testdata";
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
@@ -24,7 +25,7 @@ describe("System Users tests", () => {
     test("System Users page is displayed", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
@@ -33,68 +34,68 @@ describe("System Users tests", () => {
     test("User can search by username", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-        await adminPage.searchUserByUsername("Admin");
+        await adminPage.searchUserByUsername(testdata.roles.admin);
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const usernames = await adminPage.getUsernameSearchResults();
-        expect(usernames).toContain("Admin");
+        expect(usernames).toContain(testdata.roles.admin);
     }, 30000)
 
     test("User can search by user role", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-        await adminPage.searchUserByUserRole("ESS");
+        await adminPage.searchUserByUserRole(testdata.roles.ess);
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const userRoles = await adminPage.getUserRolesSearchResults();
-        expect(userRoles).toContain("ESS");
-        expect(userRoles).not.toContain("Admin");
+        expect(userRoles).toContain(testdata.roles.ess);
+        expect(userRoles).not.toContain(testdata.roles.admin);
     }, 30000)
 
     test("User can search by employee name", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-        await adminPage.searchUserByEmployeeName("Paul Collings");
+        await adminPage.searchUserByEmployeeName(testdata.user.employeeName);
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const employeeNames = await adminPage.getEmployeeNameSearchResults();
-        expect(employeeNames).toContain("Paul Collings");
+        expect(employeeNames).toContain(testdata.user.employeeName);
     }, 30000)
 
     test("User can search by status", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-        await adminPage.searchUserByStatus("Enabled");
+        await adminPage.searchUserByStatus(testdata.statuses.enabled);
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const employeeNames = await adminPage.getStatusSearchResults();
-        expect(employeeNames).toContain("Enabled");
-        expect(employeeNames).not.toContain("Disabled");
+        expect(employeeNames).toContain(testdata.statuses.enabled);
+        expect(employeeNames).not.toContain(testdata.statuses.disabled);
     }, 30000)
 
     test("User can reset the search results", async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-        await loginPage.login("Admin", "admin123")
+        await loginPage.login(testdata.user.username, testdata.user.password);
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-        await adminPage.searchUserByUsername("Admin");
+        await adminPage.searchUserByUsername(testdata.user.username);
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const usernames = await adminPage.getUsernameSearchResults();
-        expect(usernames).toContain("Admin");
+        expect(usernames).toContain(testdata.user.username);
         await adminPage.clickOnResetButton();
         await adminPage.waitForPageLoaded();
         const usernameInput = await adminPage.getUsernameInputValue();

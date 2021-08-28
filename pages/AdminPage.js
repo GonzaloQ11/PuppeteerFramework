@@ -76,8 +76,7 @@ export default class AdminPage extends HeaderSection {
     }
 
     async getTableColumnSearchResults(columnSelector) {
-      const columnSearchResults = await this.page.$$eval(columnSelector, (cells) => cells.map((cell) => cell.textContent));
-      return columnSearchResults;
+      return this.getElementsProperties(columnSelector, "textContent");
     }
 
     async getUsernameSearchResults() {
