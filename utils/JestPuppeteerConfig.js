@@ -7,7 +7,10 @@ async function getDefaultPage(browser) {
 }
 
 export async function launchBrowser() {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({
+        args: ["--no-sandbox"],
+        headless: process.env.HEADLESS === "true"
+    });
     const defaultPage = await getDefaultPage(browser);
     return defaultPage;
 }
