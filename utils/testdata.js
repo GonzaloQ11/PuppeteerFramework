@@ -3,7 +3,7 @@ export const testdata = {
         "username": "Admin",
         "password": "admin123",
         "invalidPassword": "123456",
-        "employeeName": "Pauly Collings"
+        "employeeName": "Paul Collings"
     },
     "roles": {
         "ess": "ESS",
