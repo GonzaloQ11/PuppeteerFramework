@@ -29,7 +29,7 @@ describe("System Users tests", () => {
         expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
         await dashboardPage.clickOnAdminTab();
         expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-    }, 30000)
+    })
 
     test("User can search by username", async () => {
         await loginPage.go()
@@ -42,7 +42,7 @@ describe("System Users tests", () => {
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const usernames = await adminPage.getUsernameSearchResults();
         expect(usernames).toContain(testdata.roles.admin);
-    }, 30000)
+    })
 
     test("User can search by user role", async () => {
         await loginPage.go()
@@ -56,7 +56,7 @@ describe("System Users tests", () => {
         const userRoles = await adminPage.getUserRolesSearchResults();
         expect(userRoles).toContain(testdata.roles.ess);
         expect(userRoles).not.toContain(testdata.roles.admin);
-    }, 30000)
+    })
 
     test("User can search by employee name", async () => {
         await loginPage.go()
@@ -69,7 +69,7 @@ describe("System Users tests", () => {
         expect(await adminPage.isResultsTableDisplayed()).toBe(true);
         const employeeNames = await adminPage.getEmployeeNameSearchResults();
         expect(employeeNames).toContain(testdata.user.employeeName);
-    }, 30000)
+    })
 
     test("User can search by status", async () => {
         await loginPage.go()
@@ -83,7 +83,7 @@ describe("System Users tests", () => {
         const employeeNames = await adminPage.getStatusSearchResults();
         expect(employeeNames).toContain(testdata.statuses.enabled);
         expect(employeeNames).not.toContain(testdata.statuses.disabled);
-    }, 30000)
+    })
 
     test("User can reset the search results", async () => {
         await loginPage.go()
@@ -100,6 +100,6 @@ describe("System Users tests", () => {
         await adminPage.waitForPageLoaded();
         const usernameInput = await adminPage.getUsernameInputValue();
         expect(usernameInput).toBe("");
-    }, 30000)
+    })
 })
 
