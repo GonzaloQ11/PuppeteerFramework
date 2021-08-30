@@ -11,6 +11,10 @@ export async function launchBrowser() {
         args: ["--no-sandbox"],
         headless: process.env.HEADLESS === "true"
     });
+    return browser;
+}
+
+export async function getPage(browser) {
     const defaultPage = await getDefaultPage(browser);
     global.page = defaultPage;
     return defaultPage;
@@ -19,3 +23,9 @@ export async function launchBrowser() {
 export async function closeBrowser(page) {
     await (await page.browser()).close();
 }
+
+export async function clearCookies(page) {
+    const client = await page.target().createCDPSession();
+    await client.send('Network.clearBrowserCookies');
+    await client.send('Network.clearBrowserCache');
+  }

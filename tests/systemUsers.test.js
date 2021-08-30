@@ -1,25 +1,30 @@
 import LoginPage from "../pages/LoginPage"
 import DashboardPage from "../pages/DashboardPage"
-import { launchBrowser, closeBrowser } from "../utils/JestPuppeteerConfig"
+import { launchBrowser, getPage, clearCookies } from "../utils/JestPuppeteerConfig"
 import AdminPage from "../pages/AdminPage";
 import { testdata } from "../utils/testdata";
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const adminPage = new AdminPage();
-let page;
+let browser, page;
 
 describe("System Users tests", () => {
 
+    beforeAll(async () => {
+        browser = await launchBrowser();
+    })
+
     beforeEach(async () => {
-        page = await launchBrowser();
+        page = await getPage(browser);
         await loginPage.setPage(page);
         await dashboardPage.setPage(page);
         await adminPage.setPage(page);
+        await clearCookies(page);
     })
 
-    afterEach(async () => {
-        await closeBrowser(page);
+    afterAll(async () => {
+        await browser.close();
     })
 
     test("System Users page is displayed", async () => {

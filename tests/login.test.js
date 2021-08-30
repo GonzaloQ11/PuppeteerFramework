@@ -1,23 +1,28 @@
 import LoginPage from "../pages/LoginPage"
 import DashboardPage from "../pages/DashboardPage"
-import { launchBrowser, closeBrowser } from "../utils/JestPuppeteerConfig"
+import { launchBrowser, getPage, clearCookies } from "../utils/JestPuppeteerConfig"
 import { testdata } from "../utils/testdata";
 import run from "../utils/plugins/integrations"
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
-let page;
+let browser, page;
 
 describe("Login Tests", () => {
 
-    beforeEach(async () => {
-        page = await launchBrowser();
-        await loginPage.setPage(page);
-        await dashboardPage.setPage(page);
+    beforeAll(async () => {
+        browser = await launchBrowser();
     })
 
-    afterEach(async () => {
-        await closeBrowser(page);
+    beforeEach(async () => {
+        page = await getPage(browser);
+        await loginPage.setPage(page);
+        await dashboardPage.setPage(page);
+        await clearCookies(page);
+    })
+
+    afterAll(async () => {
+        await browser.close();
     })
 
     test("Login page is displayed", run({
