@@ -2,6 +2,7 @@ import LoginPage from "../pages/LoginPage"
 import DashboardPage from "../pages/DashboardPage"
 import { launchBrowser, closeBrowser } from "../utils/JestPuppeteerConfig"
 import { testdata } from "../utils/testdata";
+import run from "../utils/plugins/integrations"
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
@@ -19,10 +20,18 @@ describe("Login Tests", () => {
         await closeBrowser(page);
     })
 
-    test("Login page is displayed", async () => {
+    test("Login page is displayed", run({
+        feature: "feature test",
+        story: "story test",
+        epic: "epic test",
+        issue: "issue test",
+        description: "description test",
+        testId: "testId test",
+        tag: "tag test",
+        testSteps: async () => {
         await loginPage.go()
         expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    }, 30000);
+    } }), 30000);
 
     test("User can login successfully", async () => {
         await loginPage.go()

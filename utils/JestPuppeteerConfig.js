@@ -12,6 +12,7 @@ export async function launchBrowser() {
         headless: process.env.HEADLESS === "true"
     });
     const defaultPage = await getDefaultPage(browser);
+    global.page = defaultPage;
     return defaultPage;
 }
 
