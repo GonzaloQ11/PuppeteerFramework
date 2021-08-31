@@ -122,7 +122,7 @@ async function addReportingData({ severity, feature, story, description, epic, i
   await addArguments(argument);
 }
 
-async function updateResults(testResults) {
+async function updateReport(testResults) {
   if (testResults.status === testStatusId.warning) {
     await logStep('Warning', Status.Broken);
   }
@@ -141,6 +141,6 @@ export {
   startStep,
   logError,
   Status,
-  updateResults,
+  updateReport,
   log,
 };
