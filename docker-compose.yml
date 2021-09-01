@@ -2,7 +2,7 @@ version: '2'
 
 services:
   tests:
-    image: gonzalofquispe/puppeteerautomationframework:latest
+    image: gonzalofquispe/puppeteerframework:latest
     command: "npm run test"
     volumes:
       - ./tests/:/tests/

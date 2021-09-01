@@ -9,7 +9,7 @@ RUN  apt-get update \
 
 ENV HEADLESS=true
 
-COPY package.json package-lock.json babel.config.js /
+COPY package.json package-lock.json babel.config.js jest.config.js /
 COPY /tests/ /tests/
 COPY /pages/ /pages/
 COPY /utils/ /utils/
