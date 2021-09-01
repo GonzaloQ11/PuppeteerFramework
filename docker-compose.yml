@@ -5,6 +5,4 @@ services:
     image: gonzalofquispe/puppeteerframework:latest
     command: "npm run test"
     volumes:
-      - ./tests/:/tests/
-      - ./utils/:/utils/
-      - ./pages/:/pages/
+      - ./allure-results/:/allure-results/
