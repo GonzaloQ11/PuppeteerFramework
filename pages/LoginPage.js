@@ -1,9 +1,13 @@
-import BasePage from "./BasePage";
-import { log } from "../utils/plugins/allure"
+import BasePage from './BasePage';
+import { log } from '../utils/plugins/allure';
+
 export default class LoginPage extends BasePage {
     $usernameInput = '#txtUsername';
+
     $passwordInput = '#txtPassword';
+
     $loginButton = '#btnLogin';
+
     $errorMessageContainer = '#spanMessage';
 
     @log
@@ -13,7 +17,10 @@ export default class LoginPage extends BasePage {
 
     @log
     async isLoginPageDisplayed() {
-      return this.isDisplayed(this.$loginButton) && this.isDisplayed(this.$usernameInput) && this.isDisplayed(this.$passwordInput)
+      const isLoginButtonDisplayed = await this.isDisplayed(this.$loginButton);
+      const isUsernameInputDisplayed = await this.isDisplayed(this.$usernameInput);
+      const isPasswordInputDisplayed = await this.isDisplayed(this.$passwordInput);
+      return isLoginButtonDisplayed && isUsernameInputDisplayed && isPasswordInputDisplayed;
     }
 
     @log
@@ -47,4 +54,4 @@ export default class LoginPage extends BasePage {
     async getErrorMessage() {
       return this.getText(this.$errorMessageContainer);
     }
-  }
+}

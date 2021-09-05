@@ -1,4 +1,5 @@
-import { log } from "../utils/plugins/allure"
+import { log } from '../utils/plugins/allure';
+
 export default class BasePage {
     BASE_URL = 'https://opensource-demo.orangehrmlive.com/';
 
@@ -16,17 +17,17 @@ export default class BasePage {
     }
 
     async getElementProperty(selector, property) {
-      return this.page.$eval(selector, (element, property) => element[property], property);
+      return this.page.$eval(selector, (element, prop) => element[prop], property);
     }
 
     @log
     async getText(selector) {
-      return this.getElementProperty(selector, "textContent");
+      return this.getElementProperty(selector, 'textContent');
     }
 
     @log
     async getValue(selector) {
-      return this.getElementProperty(selector, "value");
+      return this.getElementProperty(selector, 'value');
     }
 
     @log
@@ -34,27 +35,26 @@ export default class BasePage {
       try {
         await this.page.waitForSelector(selector, { timeout });
         return true;
-      }
-      catch (error) {
+      } catch (error) {
         return false;
       }
     }
 
     @log
     async waitForPageLoaded() {
-      await this.page.waitForSelector("html[class='fontawesome-i2svg-active fontawesome-i2svg-complete']");
+      await this.page.waitForSelector('html[class="fontawesome-i2svg-active fontawesome-i2svg-complete"]');
     }
 
     @log
     async getElementsProperties(selector, property) {
-      return this.page.$$eval(selector, (elements, property) => elements.map((element) => element[property]), property);
+      return this.page.$$eval(selector, (elements, prop) => elements.map((e) => e[prop]), property);
     }
 
     @log
     async selectByOptionText(dropdownSelector, option) {
-      const optionTexts = await this.getElementsProperties(`${dropdownSelector} option`, "textContent");
+      const optionTexts = await this.getElementsProperties(`${dropdownSelector} option`, 'textContent');
       const index = optionTexts.indexOf(option);
-      const optionValues = await this.getElementsProperties(`${dropdownSelector} option`, "value");
+      const optionValues = await this.getElementsProperties(`${dropdownSelector} option`, 'value');
       await this.page.select(dropdownSelector, optionValues[index]);
     }
-  }
+}

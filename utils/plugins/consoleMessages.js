@@ -33,7 +33,7 @@ export default class ConsoleMessages {
   }
 
   static getConsoleErrorMessages() {
-    let errorMessages = this.getConsoleMessages({ types: ['error'] });
+    const errorMessages = this.getConsoleMessages({ types: ['error'] });
     this.resetConsoleMessages();
     return errorMessages;
   }

@@ -3,22 +3,22 @@ import { Status } from 'jest-allure/dist/Reporter';
 import testStatusId from './testStatusIds';
 
 function log(target, name, descriptor) {
-    const original = descriptor.value;
-    if (typeof original === 'function') {
-      descriptor.value = function(...args) {
-        reporter.startStep(`${name}: ${args}`)
-        try {
-          const result = original.apply(this, args);
-          reporter.endStep()
-          return result;
-        } catch (e) {
-          reporter.endStep()
-          throw e;
-        }
+  let decoratedFunction = descriptor.value;
+  if (typeof decoratedFunction === 'function') {
+    decoratedFunction = function decorator(...args) {
+      reporter.startStep(`${name}: ${args}`);
+      try {
+        const result = original.apply(this, args);
+        reporter.endStep();
+        return result;
+      } catch (e) {
+        reporter.endStep();
+        throw e;
       }
-    }
-    return descriptor;
+    };
   }
+  return descriptor;
+}
 
 async function setData(data, logAction) {
   if (typeof data !== 'undefined') {
@@ -35,7 +35,7 @@ async function addSeverity(severity) {
 }
 
 async function addFeature(feature) {
-    await addData('feature', feature);
+  await addData('feature', feature);
 }
 
 async function addDescription(description) {
@@ -109,7 +109,9 @@ async function logError(error, stepMessage = 'Test failed', status = Status.Fail
 /**
  * Add reporting using allure. Check https://www.npmjs.com/package/jest-allure for more features
  */
-async function addReportingData({ severity, feature, story, description, epic, issue, testId, tag, argument }) {
+async function addReportingData({
+  severity, feature, story, description, epic, issue, testId, tag, argument,
+}) {
   await setDefaultEnvironmentData();
   await addSeverity(severity);
   await addFeature(feature);

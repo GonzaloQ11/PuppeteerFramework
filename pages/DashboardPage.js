@@ -1,4 +1,4 @@
-import HeaderSection from "./HeaderSection";
+import HeaderSection from './HeaderSection';
 
 export default class DashboardPage extends HeaderSection {
     $dashboardBox = '.box';
@@ -6,4 +6,4 @@ export default class DashboardPage extends HeaderSection {
     async isDashboardPageDisplayed() {
       return this.isDisplayed(this.$dashboardBox);
     }
-  }
+}

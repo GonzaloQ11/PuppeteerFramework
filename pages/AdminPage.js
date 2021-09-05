@@ -1,24 +1,25 @@
-import HeaderSection from "./HeaderSection";
-import { log } from "../utils/plugins/allure"
+import HeaderSection from './HeaderSection';
+import { log } from '../utils/plugins/allure';
 
 export default class AdminPage extends HeaderSection {
     $searchForm = {
       box: '#systemUser-information',
       usernameInput: '#searchSystemUser_userName',
-      userRoleSelect: "#searchSystemUser_userType",
+      userRoleSelect: '#searchSystemUser_userType',
       employeeNameInput: '#searchSystemUser_employeeName_empName',
       statusSelect: '#searchSystemUser_status',
       searchButton: '#searchBtn',
       resetButton: '#resetBtn',
     };
+
     $searchResults = {
-      box: "#search-results",
+      box: '#search-results',
       table: {
-        id: "#resultTable",
-        usernames: "#resultTable td [href*='user']",
-        userRoles: "#resultTable td:nth-child(3)",
-        employeeNames: "#resultTable td:nth-child(4)",
-        status: "#resultTable td:nth-child(5)",
+        id: '#resultTable',
+        usernames: '#resultTable td [href*=user]',
+        userRoles: '#resultTable td:nth-child(3)',
+        employeeNames: '#resultTable td:nth-child(4)',
+        status: '#resultTable td:nth-child(5)',
       },
     };
 
@@ -62,7 +63,7 @@ export default class AdminPage extends HeaderSection {
     @log
     async typeEmployeeName(name) {
       await this.page.type(this.$searchForm.employeeNameInput, name, { delay: 50 });
-      await this.page.keyboard.press("Enter")
+      await this.page.keyboard.press('Enter');
     }
 
     @log
@@ -89,7 +90,7 @@ export default class AdminPage extends HeaderSection {
 
     @log
     async getTableColumnSearchResults(columnSelector) {
-      return this.getElementsProperties(columnSelector, "textContent");
+      return this.getElementsProperties(columnSelector, 'textContent');
     }
 
     @log
@@ -116,4 +117,4 @@ export default class AdminPage extends HeaderSection {
     async getUsernameInputValue() {
       return this.getValue(this.$searchForm.usernameInput);
     }
-  }
+}

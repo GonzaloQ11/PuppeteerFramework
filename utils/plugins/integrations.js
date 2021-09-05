@@ -19,9 +19,13 @@ async function updateResults(testResults) {
   await updateReport(testResults);
 }
 
-function run({ epic, testSteps, severity, feature, story, description, issue, testId, tag, argument }) {
+function run({
+  epic, testSteps, severity, feature, story, description, issue, testId, tag, argument,
+}) {
   return async () => {
-    await addReportingData({ severity, feature, story, description, epic, issue, testId, tag, argument });
+    await addReportingData({
+      severity, feature, story, description, epic, issue, testId, tag, argument,
+    });
     ConsoleMessages.startRegistryConsoleLog();
     const testResults = await runTestSteps(testSteps);
     await updateResults(testResults);
