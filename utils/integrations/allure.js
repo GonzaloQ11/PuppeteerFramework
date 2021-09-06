@@ -3,21 +3,17 @@ import { Status } from 'jest-allure/dist/Reporter';
 import testStatusId from './testStatusIds';
 
 function log(target, name, descriptor) {
-  let decoratedFunction = descriptor.value;
-  if (typeof decoratedFunction === 'function') {
-    decoratedFunction = function decorator(...args) {
-      reporter.startStep(`${name}: ${args}`);
-      try {
-        const result = original.apply(this, args);
-        reporter.endStep();
-        return result;
-      } catch (e) {
-        reporter.endStep();
-        throw e;
-      }
+  const decoratedFunction = { ...descriptor };
+  if (typeof decoratedFunction.value === 'function') {
+    decoratedFunction.value = async function decorator(...args) {
+      const stepName = [...args].length > 0 ? `${name}: ${args}` : name;
+      reporter.startStep(stepName);
+      const result = descriptor.value.apply(this, args);
+      reporter.endStep();
+      return result;
     };
   }
-  return descriptor;
+  return decoratedFunction;
 }
 
 async function setData(data, logAction) {
