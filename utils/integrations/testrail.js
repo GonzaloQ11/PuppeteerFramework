@@ -2,8 +2,8 @@
 const Testrail = require('testrail-api');
 
 const testrail = new Testrail({
-  host: 'https://company.testrail.com/',
-  user: 'qatest@company.com',
+  host: process.env.TESTRAIL_HOST,
+  user: process.env.TESTRAIL_USER,
   password: process.env.TESTRAIL_API_KEY,
 });
 
