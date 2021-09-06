@@ -2,7 +2,7 @@ import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
 import { launchBrowser, getPage, clearCookies } from '../utils/JestPuppeteerConfig';
 import testdata from '../utils/testdata';
-import run from '../utils/plugins/integrations';
+import run from '../utils/integrations/index';
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();

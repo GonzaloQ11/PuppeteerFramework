@@ -1,6 +1,7 @@
 import { addReportingData, updateReport } from './allure';
 import testStatusId from './testStatusIds';
 import ConsoleMessages from './consoleMessages';
+import testrail from './testrail';
 
 async function runTestSteps(testSteps) {
   const testResults = { status: undefined, error: undefined };
@@ -14,9 +15,10 @@ async function runTestSteps(testSteps) {
   return testResults;
 }
 
-async function updateResults(testResults) {
+async function updateResults({ testResults, testId }) {
   ConsoleMessages.displayErrorMessages();
   await updateReport(testResults);
+  await testrail.updateTestCase({ testId, status: testResults.status });
 }
 
 function run({
@@ -28,7 +30,7 @@ function run({
     });
     ConsoleMessages.startRegistryConsoleLog();
     const testResults = await runTestSteps(testSteps);
-    await updateResults(testResults);
+    await updateResults({ testResults, testId });
   };
 }
 

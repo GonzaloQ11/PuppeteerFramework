@@ -1,5 +1,5 @@
 import BasePage from './BasePage';
-import { log } from '../utils/plugins/allure';
+import { log } from '../utils/integrations/allure';
 
 export default class HeaderSection extends BasePage {
     $admin = '#menu_admin_viewAdminModule';

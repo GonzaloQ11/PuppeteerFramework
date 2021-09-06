@@ -1,5 +1,5 @@
 import BasePage from './BasePage';
-import { log } from '../utils/plugins/allure';
+import { log } from '../utils/integrations/allure';
 
 export default class LoginPage extends BasePage {
     $usernameInput = '#txtUsername';

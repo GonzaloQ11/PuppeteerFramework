@@ -1,4 +1,4 @@
-import { log } from '../utils/plugins/allure';
+import { log } from '../utils/integrations/allure';
 
 export default class BasePage {
     BASE_URL = 'https://opensource-demo.orangehrmlive.com/';
