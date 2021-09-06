@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  tests:
+  test:
     image: gonzalofquispe/puppeteerframework:latest
-    command: "npm run test"
+    command: 'npm run test'
     volumes:
       - ./allure-results/:/allure-results/
