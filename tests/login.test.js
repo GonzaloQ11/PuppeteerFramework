@@ -31,7 +31,7 @@ describe('Login Tests', () => {
     epic: 'epic test',
     issue: 'issue test',
     description: 'description test',
-    testId: 'testId test',
+    testId: 12345,
     tag: 'tag test',
     testSteps: async () => {
       await loginPage.go();
@@ -39,45 +39,55 @@ describe('Login Tests', () => {
     },
   }));
 
-  test('User can login successfully', async () => {
-    await loginPage.go();
-    expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    await loginPage.login(testdata.user.username, testdata.user.password);
-    expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
-  });
+  test('User can login successfully', run({
+    testSteps: async () => {
+      await loginPage.go();
+      expect(await loginPage.isLoginPageDisplayed()).toBe(true);
+      await loginPage.login(testdata.user.username, testdata.user.password);
+      expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
+    },
+  }));
 
-  test('Username cannot be empty', async () => {
-    await loginPage.go();
-    expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    await loginPage.clickLoginButton();
-    expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
-    expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.emptyUsername);
-  });
+  test('Username cannot be empty', run({
+    testSteps: async () => {
+      await loginPage.go();
+      expect(await loginPage.isLoginPageDisplayed()).toBe(true);
+      await loginPage.clickLoginButton();
+      expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
+      expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.emptyUsername);
+    },
+  }));
 
-  test('Password cannot be empty', async () => {
-    await loginPage.go();
-    expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    await loginPage.typeUsername(testdata.user.username);
-    await loginPage.clickLoginButton();
-    expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
-    expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.emptyPassword);
-  });
+  test('Password cannot be empty', run({
+    testSteps: async () => {
+      await loginPage.go();
+      expect(await loginPage.isLoginPageDisplayed()).toBe(true);
+      await loginPage.typeUsername(testdata.user.username);
+      await loginPage.clickLoginButton();
+      expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
+      expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.emptyPassword);
+    },
+  }));
 
-  test('Invalid credentials', async () => {
-    await loginPage.go();
-    expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    await loginPage.login(testdata.user.username, testdata.user.invalidPassword);
-    expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
-    expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.invalidCredentials);
-  });
+  test('Invalid credentials', run({
+    testSteps: async () => {
+      await loginPage.go();
+      expect(await loginPage.isLoginPageDisplayed()).toBe(true);
+      await loginPage.login(testdata.user.username, testdata.user.invalidPassword);
+      expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
+      expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.invalidCredentials);
+    },
+  }));
 
-  test('User can login after a failed attempt', async () => {
-    await loginPage.go();
-    expect(await loginPage.isLoginPageDisplayed()).toBe(true);
-    await loginPage.login(testdata.user.username, testdata.user.invalidPassword);
-    expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
-    expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.invalidCredentials);
-    await loginPage.login(testdata.user.username, testdata.user.password);
-    expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
-  });
+  test('User can login after a failed attempt', run({
+    testSteps: async () => {
+      await loginPage.go();
+      expect(await loginPage.isLoginPageDisplayed()).toBe(true);
+      await loginPage.login(testdata.user.username, testdata.user.invalidPassword);
+      expect(await loginPage.isErrorMessageDisplayed()).toBe(true);
+      expect(await loginPage.getErrorMessage()).toBe(testdata.errorMessages.invalidCredentials);
+      await loginPage.login(testdata.user.username, testdata.user.password);
+      expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
+    },
+  }));
 });
