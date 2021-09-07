@@ -1,7 +1,7 @@
 const testdata = {
   user: {
-    username: 'Admin',
-    password: 'admin123',
+    username: process.env.APP_USERNAME,
+    password: process.env.APP_PASSWORD,
     invalidPassword: '123456',
     employeeName: 'Paul Collings',
   },

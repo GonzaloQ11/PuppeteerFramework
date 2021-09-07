@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer';
 
+require('dotenv').config();
+
 async function getDefaultPage(browser) {
   const currentPages = await browser.pages();
   const page = currentPages.length === 0 ? await browser.newPage() : currentPages[0];
