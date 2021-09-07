@@ -89,28 +89,28 @@ export default class AdminPage extends HeaderSection {
     }
 
     @log
-    async getTableColumnSearchResults(columnSelector) {
+    async getTableColumnValues(columnSelector) {
       return this.getElementsProperties(columnSelector, 'textContent');
     }
 
     @log
-    async getUsernameSearchResults() {
-      return this.getTableColumnSearchResults(this.$searchResults.table.usernames);
+    async getTableUsernames() {
+      return this.getTableColumnValues(this.$searchResults.table.usernames);
     }
 
     @log
-    async getUserRolesSearchResults() {
-      return this.getTableColumnSearchResults(this.$searchResults.table.userRoles);
+    async getTableUserRoles() {
+      return this.getTableColumnValues(this.$searchResults.table.userRoles);
     }
 
     @log
-    async getEmployeeNameSearchResults() {
-      return this.getTableColumnSearchResults(this.$searchResults.table.employeeNames);
+    async getTableEmployeeNames() {
+      return this.getTableColumnValues(this.$searchResults.table.employeeNames);
     }
 
     @log
-    async getStatusSearchResults() {
-      return this.getTableColumnSearchResults(this.$searchResults.table.status);
+    async getTableStatuses() {
+      return this.getTableColumnValues(this.$searchResults.table.status);
     }
 
     @log

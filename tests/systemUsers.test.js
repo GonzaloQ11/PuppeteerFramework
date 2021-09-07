@@ -49,7 +49,7 @@ describe('System Users tests', () => {
       expect(await adminPage.isAdminPageDisplayed()).toBe(true);
       await adminPage.searchUserByUsername(testdata.roles.admin);
       expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const usernames = await adminPage.getUsernameSearchResults();
+      const usernames = await adminPage.getTableUsernames();
       expect(usernames).toContain(testdata.roles.admin);
     },
   }));
@@ -64,7 +64,7 @@ describe('System Users tests', () => {
       expect(await adminPage.isAdminPageDisplayed()).toBe(true);
       await adminPage.searchUserByUserRole(testdata.roles.ess);
       expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const userRoles = await adminPage.getUserRolesSearchResults();
+      const userRoles = await adminPage.getTableUserRoles();
       expect(userRoles).toContain(testdata.roles.ess);
       expect(userRoles).not.toContain(testdata.roles.admin);
     },
@@ -78,10 +78,11 @@ describe('System Users tests', () => {
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
       expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      await adminPage.searchUserByEmployeeName(testdata.user.employeeName);
+      let employeeNames = await adminPage.getTableEmployeeNames();
+      await adminPage.searchUserByEmployeeName(employeeNames[0]);
       expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const employeeNames = await adminPage.getEmployeeNameSearchResults();
-      expect(employeeNames).toContain(testdata.user.employeeName);
+      employeeNames = await adminPage.getTableEmployeeNames();
+      expect(employeeNames).toContain(employeeNames[0]);
     },
   }));
 
@@ -95,7 +96,7 @@ describe('System Users tests', () => {
       expect(await adminPage.isAdminPageDisplayed()).toBe(true);
       await adminPage.searchUserByStatus(testdata.statuses.enabled);
       expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const employeeNames = await adminPage.getStatusSearchResults();
+      const employeeNames = await adminPage.getTableStatuses();
       expect(employeeNames).toContain(testdata.statuses.enabled);
       expect(employeeNames).not.toContain(testdata.statuses.disabled);
     },
@@ -111,7 +112,7 @@ describe('System Users tests', () => {
       expect(await adminPage.isAdminPageDisplayed()).toBe(true);
       await adminPage.searchUserByUsername(testdata.user.username);
       expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const usernames = await adminPage.getUsernameSearchResults();
+      const usernames = await adminPage.getTableUsernames();
       expect(usernames).toContain(testdata.user.username);
       await adminPage.clickOnResetButton();
       await adminPage.waitForPageLoaded();
