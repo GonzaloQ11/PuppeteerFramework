@@ -8,6 +8,9 @@ RUN  apt-get update \
      && rm -rf /var/lib/apt/lists/*
 
 ENV HEADLESS=true
+ENV APP_USERNAME=Admin
+ENV APP_PASSWORD=admin123
+ENV TESTRAIL_UPDATE_RESULTS=false
 
 COPY package.json package-lock.json babel.config.js jest.config.js /
 COPY /tests/ /tests/
