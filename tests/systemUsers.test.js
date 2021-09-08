@@ -1,13 +1,13 @@
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
 import { launchBrowser, getPage, clearCookies } from '../utils/JestPuppeteerConfig';
-import AdminPage from '../pages/AdminPage';
+import UsersPage from '../pages/UsersPage';
 import testdata from '../utils/testdata';
 import run from '../utils/integrations/index';
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
-const adminPage = new AdminPage();
+const usersPage = new UsersPage();
 let browser;
 let page;
 
@@ -20,7 +20,7 @@ describe('System Users tests', () => {
     page = await getPage(browser);
     await loginPage.setPage(page);
     await dashboardPage.setPage(page);
-    await adminPage.setPage(page);
+    await usersPage.setPage(page);
     await clearCookies(page);
   });
 
@@ -35,7 +35,7 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
     },
   }));
 
@@ -46,10 +46,10 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      await adminPage.searchUserByUsername(testdata.roles.admin);
-      expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const usernames = await adminPage.getTableUsernames();
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
+      await usersPage.searchUserByUsername(testdata.roles.admin);
+      expect(await usersPage.isResultsTableDisplayed()).toBe(true);
+      const usernames = await usersPage.getTableUsernames();
       expect(usernames).toContain(testdata.roles.admin);
     },
   }));
@@ -61,10 +61,10 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      await adminPage.searchUserByUserRole(testdata.roles.ess);
-      expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const userRoles = await adminPage.getTableUserRoles();
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
+      await usersPage.searchUserByUserRole(testdata.roles.ess);
+      expect(await usersPage.isResultsTableDisplayed()).toBe(true);
+      const userRoles = await usersPage.getTableUserRoles();
       expect(userRoles).toContain(testdata.roles.ess);
       expect(userRoles).not.toContain(testdata.roles.admin);
     },
@@ -77,11 +77,11 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      let employeeNames = await adminPage.getTableEmployeeNames();
-      await adminPage.searchUserByEmployeeName(employeeNames[0]);
-      expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      employeeNames = await adminPage.getTableEmployeeNames();
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
+      let employeeNames = await usersPage.getTableEmployeeNames();
+      await usersPage.searchUserByEmployeeName(employeeNames[0]);
+      expect(await usersPage.isResultsTableDisplayed()).toBe(true);
+      employeeNames = await usersPage.getTableEmployeeNames();
       expect(employeeNames).toContain(employeeNames[0]);
     },
   }));
@@ -93,10 +93,10 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      await adminPage.searchUserByStatus(testdata.statuses.enabled);
-      expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const employeeNames = await adminPage.getTableStatuses();
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
+      await usersPage.searchUserByStatus(testdata.statuses.enabled);
+      expect(await usersPage.isResultsTableDisplayed()).toBe(true);
+      const employeeNames = await usersPage.getTableStatuses();
       expect(employeeNames).toContain(testdata.statuses.enabled);
       expect(employeeNames).not.toContain(testdata.statuses.disabled);
     },
@@ -109,14 +109,14 @@ describe('System Users tests', () => {
       await loginPage.login(testdata.user.username, testdata.user.password);
       expect(await dashboardPage.isDashboardPageDisplayed()).toBe(true);
       await dashboardPage.clickOnAdminTab();
-      expect(await adminPage.isAdminPageDisplayed()).toBe(true);
-      await adminPage.searchUserByUsername(testdata.user.username);
-      expect(await adminPage.isResultsTableDisplayed()).toBe(true);
-      const usernames = await adminPage.getTableUsernames();
+      expect(await usersPage.isUsersPageDisplayed()).toBe(true);
+      await usersPage.searchUserByUsername(testdata.user.username);
+      expect(await usersPage.isResultsTableDisplayed()).toBe(true);
+      const usernames = await usersPage.getTableUsernames();
       expect(usernames).toContain(testdata.user.username);
-      await adminPage.clickOnResetButton();
-      await adminPage.waitForPageLoaded();
-      const usernameInput = await adminPage.getUsernameInputValue();
+      await usersPage.clickOnResetButton();
+      await usersPage.waitForPageLoaded();
+      const usernameInput = await usersPage.getUsernameInputValue();
       expect(usernameInput).toBe('');
     },
   }));

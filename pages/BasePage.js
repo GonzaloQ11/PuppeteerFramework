@@ -3,6 +3,8 @@ import { log } from '../utils/integrations/allure';
 export default class BasePage {
     BASE_URL = 'https://opensource-demo.orangehrmlive.com/';
 
+    $loadingPage = 'html[class="fontawesome-i2svg-active fontawesome-i2svg-complete"]'
+
     constructor(page) {
       this.page = page;
     }
@@ -42,7 +44,7 @@ export default class BasePage {
 
     @log
     async waitForPageLoaded() {
-      await this.page.waitForSelector('html[class="fontawesome-i2svg-active fontawesome-i2svg-complete"]');
+      await this.page.waitForSelector(this.$loadingPage);
     }
 
     @log

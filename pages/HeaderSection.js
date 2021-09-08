@@ -7,5 +7,6 @@ export default class HeaderSection extends BasePage {
     @log
     async clickOnAdminTab() {
       await this.page.click(this.$admin);
+      await this.waitForPageLoaded();
     }
 }

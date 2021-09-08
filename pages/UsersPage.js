@@ -1,7 +1,7 @@
 import HeaderSection from './HeaderSection';
 import { log } from '../utils/integrations/allure';
 
-export default class AdminPage extends HeaderSection {
+export default class UsersPage extends HeaderSection {
     $searchForm = {
       box: '#systemUser-information',
       usernameInput: '#searchSystemUser_userName',
@@ -24,7 +24,7 @@ export default class AdminPage extends HeaderSection {
     };
 
     @log
-    async isAdminPageDisplayed() {
+    async isUsersPageDisplayed() {
       return this.isDisplayed(this.$searchForm.box) && this.isDisplayed(this.$searchResults.box);
     }
 
@@ -40,12 +40,12 @@ export default class AdminPage extends HeaderSection {
 
     @log
     async clickOnSearchButton() {
-      await this.page.click(this.$searchForm.searchButton, { delay: 300 });
+      await this.page.click(this.$searchForm.searchButton);
     }
 
     @log
     async clickOnResetButton() {
-      await this.page.click(this.$searchForm.resetButton, { delay: 300 });
+      await this.page.click(this.$searchForm.resetButton);
     }
 
     @log
